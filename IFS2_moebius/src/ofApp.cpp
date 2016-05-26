@@ -23,12 +23,12 @@ void ofApp::init() {
   // create/initialise transforms.
   for (int i=0; i<nt; i++) {
 
-    complex<double> a(ofRandom(m1, m2), ofRandom(m1, m2));
-    complex<double> b(ofRandom(m3, m4), ofRandom(m3, m4));
-    complex<double> c(ofRandom(m1, m2), ofRandom(m1, m2));
-    complex<double> d(ofRandom(m3, m4), ofRandom(m3, m4));
+    std::complex<double> a(ofRandom(m1, m2), ofRandom(m1, m2));
+    std::complex<double> b(ofRandom(m3, m4), ofRandom(m3, m4));
+    std::complex<double> c(ofRandom(m1, m2), ofRandom(m1, m2));
+    std::complex<double> d(ofRandom(m3, m4), ofRandom(m3, m4));
 
-    //cout << a << "," << b << endl;
+    //std::cout << a << "," << b << endl;
     //cout << c << "," << d << endl;
 
     vector<complex<double>> t;
@@ -41,7 +41,6 @@ void ofApp::init() {
     transforms.push_back(t);
 
   }
-
 
 }
 
