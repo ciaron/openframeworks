@@ -12,11 +12,11 @@ class ofApp : public ofBaseApp{
     int wh; // resolution, i.e. width*height;
     double x, y, ix, iy;
     int X, Y;
-    double min = -1.0;
-    double max = 1.0;
+    double min = -1.;
+    double max = 1.;
 
     int count;
-    int nt = 5; // num transforms
+    int nt = 3; // num transforms
     int np = 200000; // num points
 
     int width, height;
@@ -31,9 +31,9 @@ class ofApp : public ofBaseApp{
     ofImage img;
 
     //float probs[6] = {1.0/6, 2.0/6, 3.0/6, 4.0/6, 5.0/6, 6.0/6};
-    float probs[5] = {0.2, 0.4, 0.6, 0.8, 1.0};
+    //float probs[5] = {0.2, 0.4, 0.6, 0.8, 1.0};
 //    float probs[4] = {0.25, 0.5, 0.75, 1.0};
-    //float probs[3] = {0.33, 0.66, 1.0};
+    float probs[3] = {0.33, 0.66, 1.0};
     //float probs[2] = {0.5, 1.0};
     //float probs[1] = {1.0};
 

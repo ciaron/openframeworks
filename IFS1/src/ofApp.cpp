@@ -9,6 +9,7 @@ std::string uint64_to_string( uint64_t value ) {
 //----- my init function for selecting transforms  ---//
 void ofApp::init() {
   count = 0;
+  x=0.0; y=0.0;
 
   // initialise array of hit counts;
   points.resize(wh);
@@ -32,31 +33,32 @@ void ofApp::init() {
 
     vector<float> t;
 
-    float r1 = ofRandom(0, 1.0);
-    float r2 = ofRandom(0, 0.5);
+    //if (ofRandom(1.0) < 0.5) r1 = r1 * -1.0;
+    //if (ofRandom(1.0) < 0.5) r2 = r2 * -1.0;
 
-    if (ofRandom(1.0) < 0.5) r1 = r1 * -1.0;
-    if (ofRandom(1.0) < 0.5) r2 = r2 * -1.0;
-
-    for (int j=0; j<size-2; ++j){
-      t.push_back(r1);
+    for (int j=0; j<size-2; ++j) {
+        float r1 = ofRandom(-1.0, 1.0);
+        //if (ofRandom(1.0) < 0.5) r1 = -r1;
+        t.push_back(r1);
     }
 
-    for (int j=size-2; j<size; ++j){
-      t.push_back(r2);
+    for (int j=size-2; j<size; ++j) {
+        float r2 = ofRandom(-0.5, 0.5);
+        //if (ofRandom(1.0) < 0.5) r2 = -r2;
+        t.push_back(r2);
     }
 
-   // t[1] = 0.0;
-    //t[2] = -1.0*t[1];
+    //t[1] = 0.0;
+    t[2] = -1.0*t[1];
 
- //   t[0] = t[3];
- //   t[1] = -1.0*t[2];
- //   t[4] = t[5];
+    t[0] = t[3];
+    //t[1] = -1.0*t[2];
+    //t[4] = t[5];
 
+    // cout << t[0] << ", " << t[1] << ", " << t[2] << ", " << t[3] << ", " << t[4] << ", " << t[5] << ", " << endl;
     transforms.push_back(t);
 
   }
-
 
 }
 
@@ -102,11 +104,13 @@ void ofApp::update(){
 
       vector<float> tr = transforms[tn];
 
-//      x = ix*tr[0] + iy*tr[1] + tr[4];
-//      y = ix*tr[2] + iy*tr[3] + tr[5];
+      x = ix*tr[0] + iy*tr[1] + tr[4];
+      y = ix*tr[2] + iy*tr[3] + tr[5];
 
-      x = ix*tr[0] + iy*tr[1] + tr[2];
-      y = ix*tr[3] + iy*tr[4] + tr[5];
+//      x = ix*tr[0] + iy*tr[1] + tr[2];
+//      y = ix*tr[3] + iy*tr[4] + tr[5];
+
+ //     ofPoint xy = ofPoint(x,y);
 
       // store points, if inside view
       X = (int)ofMap(x, min, max, 0, width-1);
