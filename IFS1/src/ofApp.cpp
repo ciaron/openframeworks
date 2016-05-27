@@ -9,7 +9,10 @@ std::string uint64_to_string( uint64_t value ) {
 //----- my init function for selecting transforms  ---//
 void ofApp::init() {
   count = 0;
-  x=0.0; y=0.0;
+
+  //x=0.0; y=0.0;
+  x = ofRandom(min, max);
+  y = ofRandom(min, max);
 
   // initialise array of hit counts;
   points.resize(wh);
@@ -32,18 +35,16 @@ void ofApp::init() {
   for (int i=0; i<nt; i++){
 
     vector<float> t;
-
-    //if (ofRandom(1.0) < 0.5) r1 = r1 * -1.0;
-    //if (ofRandom(1.0) < 0.5) r2 = r2 * -1.0;
+//    float theta = ofRandom(PI);
 
     for (int j=0; j<size-2; ++j) {
-        float r1 = ofRandom(-1.0, 1.0);
+        float r1 = ofRandom(min, max);
         //if (ofRandom(1.0) < 0.5) r1 = -r1;
         t.push_back(r1);
     }
 
     for (int j=size-2; j<size; ++j) {
-        float r2 = ofRandom(-0.5, 0.5);
+        float r2 = ofRandom(min/1.05, max/1.05);
         //if (ofRandom(1.0) < 0.5) r2 = -r2;
         t.push_back(r2);
     }
@@ -51,15 +52,70 @@ void ofApp::init() {
     //t[1] = 0.0;
     t[2] = -1.0*t[1];
 
-    t[0] = t[3];
-    //t[1] = -1.0*t[2];
+    t[0] = t[4];
+    //t[1] = -1.0*t[3];
+
     //t[4] = t[5];
+
+    /*
+    cout << theta*RAD_TO_DEG << ", " << sin(theta) << ", " << cos(theta) << endl;
+    t.push_back(cos(theta));
+    t.push_back(-sin(theta));
+
+    t.push_back(sin(theta));
+    t.push_back(cos(theta));
+
+    t.push_back(ofRandom(-0.5, 0.5));
+    t.push_back(ofRandom(-0.5, 0.5));
+*/
 
     // cout << t[0] << ", " << t[1] << ", " << t[2] << ", " << t[3] << ", " << t[4] << ", " << t[5] << ", " << endl;
     transforms.push_back(t);
 
   }
 
+/*{
+  // SIERPINSKI
+  transforms.clear();
+  vector<float> t;
+
+  t.push_back(0.5);
+  t.push_back(0.0);
+
+  t.push_back(0.0);
+  t.push_back(0.5);
+
+  t.push_back(0.0);
+  t.push_back(0.0);
+
+  transforms.push_back(t);
+
+  t.clear();
+
+  t.push_back(0.5);
+  t.push_back(0.0);
+
+  t.push_back(0.0);
+  t.push_back(0.5);
+
+  t.push_back(0.25);
+  t.push_back(0.0);
+
+  transforms.push_back(t);
+
+  t.clear();
+
+  t.push_back(0.5);
+  t.push_back(0.0);
+
+  t.push_back(0.0);
+  t.push_back(0.5);
+
+  t.push_back(0.0);
+  t.push_back(0.25);
+
+  transforms.push_back(t);
+}*/
 }
 
 //--------------------------------------------------------------
@@ -104,8 +160,19 @@ void ofApp::update(){
 
       vector<float> tr = transforms[tn];
 
-      x = ix*tr[0] + iy*tr[1] + tr[4];
-      y = ix*tr[2] + iy*tr[3] + tr[5];
+      double  (*fp1)(double);
+      double  (*fp2)(double);
+
+      fp1 = sin;
+      fp2 = cos;
+
+      x = fp1(ix*tr[0] + iy*tr[1] + tr[4]);
+      y = fp2(ix*tr[2] + iy*tr[3] + tr[5]);
+
+//            if (x<min) x=max;
+//            if (X>max) X=min;
+//            if (Y<min) Y=max;
+//            if (X<max) Y=min;
 
 //      x = ix*tr[0] + iy*tr[1] + tr[2];
 //      y = ix*tr[3] + iy*tr[4] + tr[5];
@@ -113,12 +180,19 @@ void ofApp::update(){
  //     ofPoint xy = ofPoint(x,y);
 
       // store points, if inside view
-      X = (int)ofMap(x, min, max, 0, width-1);
-      Y = (int)ofMap(y, min, max, 0, height-1);
+      X = (int)ofMap(x, min, max, 20, width-21, true);   // clamp
+      Y = (int)ofMap(y, min, max, 20, height-21, true);  // clamp
 
-      if (X>0 && X<width && Y>0 && Y<height) {
+      //if (X>20 && X<width-20 && Y>20 && Y<height-20) {
         points[Y*width+X] += 1;
-      }
+      //}
+
+//      if (X<20) X==width-20;
+//      if (X>(width-20)) X==20;
+//      if (Y<20) Y==height-20;
+//      if (X<20) Y==20;
+
+//      points[Y*width+X] += 1;
 
       ix=x;
       iy=y;
@@ -143,11 +217,16 @@ void ofApp::draw(){
 
   tex.loadData(pixels);
   tex.draw(0,0);
+
 }
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
     if(key == 's'){
+
+        // via: https://forum.openframeworks.cc/t/solved-saving-as-pdf-or-png-off-screen-drawing/9724/2
+        //fbo.readToPixels(pix);
+        //ofSaveImage(pix, "testimage.png", OF_IMAGE_QUALITY_BEST);
 
         std::time_t result = std::time(nullptr);
         //std::cout << std::asctime(std::localtime(&result))
