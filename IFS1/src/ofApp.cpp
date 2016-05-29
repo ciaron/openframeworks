@@ -10,17 +10,15 @@ std::string uint64_to_string( uint64_t value ) {
 void ofApp::init() {
   count = 0;
 
-  //x=0.0; y=0.0;
-  x = ofRandom(min, max);
-  y = ofRandom(min, max);
-
-  // initialise array of hit counts;
-  points.resize(wh);
-  std::fill(points.begin(), points.end(), 0);
+  x=0.0; y=0.0;
 
   // set random start point
   ix = ofRandom(min, max);
   iy = ofRandom(min, max);
+
+  // initialise array of hit counts;
+  points.resize(wh);
+  std::fill(points.begin(), points.end(), 0);
 
   // see http://openframeworks.cc/ofBook/chapters/how_of_works.html
   pixels.allocate(width, height, OF_IMAGE_COLOR_ALPHA);
@@ -34,25 +32,35 @@ void ofApp::init() {
   // create/initialise transforms.
   for (int i=0; i<nt; i++){
 
-    vector<float> t;
-//    float theta = ofRandom(PI);
+    vector<double> t;
+    float theta = ofRandom(-TWO_PI, TWO_PI);
+
+//    t.push_back(cos(theta));
+//    t.push_back(sin(theta));
+//    t.push_back(-sin(theta));
+//    t.push_back(cos(theta));
 
     for (int j=0; j<size-2; ++j) {
-        float r1 = ofRandom(min, max);
+        double r1 = ofRandom(min/1., max/1.);
         //if (ofRandom(1.0) < 0.5) r1 = -r1;
         t.push_back(r1);
     }
 
     for (int j=size-2; j<size; ++j) {
-        float r2 = ofRandom(min/1.05, max/1.05);
-        //if (ofRandom(1.0) < 0.5) r2 = -r2;
+        double r2 = ofRandom(min/1.0, max/1.0);
+
+        //float r2 = ofRandom(0.1, max/2.12);
+        //if (ofRandom(1.0) < 0.25) r2 = -r2;
+
         t.push_back(r2);
     }
 
-    //t[1] = 0.0;
-    t[2] = -1.0*t[1];
+//cout << theta << "," << t[0] << "," << t[1] << "," << t[2] << "," << t[3] << "," << endl;
 
-    t[0] = t[4];
+    // t[0] = 0.0;
+    //t[2] = -1.0*t[1];
+
+    //t[0] = t[3];
     //t[1] = -1.0*t[3];
 
     //t[4] = t[5];
@@ -122,10 +130,6 @@ void ofApp::init() {
 void ofApp::setup(){
     ofBackground(0);
 
-    width = ofGetWidth();
-    height = ofGetHeight();
-    wh = width * height;
-
     init();
 }
 
@@ -158,41 +162,42 @@ void ofApp::update(){
       //int tn = (int)ofRandom(0,nt);
       int tn = chooseTransform(nt);
 
-      vector<float> tr = transforms[tn];
+      vector<double> tr = transforms[tn];
 
       double  (*fp1)(double);
       double  (*fp2)(double);
 
+      x = (ix*tr[0] + iy*tr[1] + tr[4]);
+      y = (ix*tr[2] + iy*tr[3] + tr[5]);
+
+      // SINUSOIDAL
       fp1 = sin;
-      fp2 = cos;
+      fp2 = sin;
+      x = fp1(x);
+      y = fp2(y);
 
-      x = fp1(ix*tr[0] + iy*tr[1] + tr[4]);
-      y = fp2(ix*tr[2] + iy*tr[3] + tr[5]);
+      // SPHERICAL
+      //double r2 = (x*x + y*y);
+      //x = x/r2;
+      //y = y/r2;
 
-//            if (x<min) x=max;
-//            if (X>max) X=min;
-//            if (Y<min) Y=max;
-//            if (X<max) Y=min;
+      // HORSESHOE
+      //double r = sqrt(x*x + y*y);
+      //x = ((x-y)*(x+y)) / r;
+      //y = (2*x*y)/r;
 
-//      x = ix*tr[0] + iy*tr[1] + tr[2];
-//      y = ix*tr[3] + iy*tr[4] + tr[5];
-
- //     ofPoint xy = ofPoint(x,y);
+      // SWIRL
+      //double r2 = (x*x + y*y);
+      //x = x*(sin(r2)) - y*cos(r2);
+      //y = x*(cos(r2)) + y*sin(r2);
 
       // store points, if inside view
-      X = (int)ofMap(x, min, max, 20, width-21, true);   // clamp
-      Y = (int)ofMap(y, min, max, 20, height-21, true);  // clamp
+      X = (int)ofMap(x, min, max, 20, width-21, false);   // clamp
+      Y = (int)ofMap(y, min, max, 20, height-21, false);  // clamp
 
-      //if (X>20 && X<width-20 && Y>20 && Y<height-20) {
+      if (X>20 && X<width-20 && Y>20 && Y<height-20) {
         points[Y*width+X] += 1;
-      //}
-
-//      if (X<20) X==width-20;
-//      if (X>(width-20)) X==20;
-//      if (Y<20) Y==height-20;
-//      if (X<20) Y==20;
-
-//      points[Y*width+X] += 1;
+      }
 
       ix=x;
       iy=y;
@@ -212,11 +217,13 @@ void ofApp::draw(){
           float c = 255*log(points[n])/log(np);
           pixels.setColor(n*4, ofColor(c,c,c));
 
-    }
+      } else {
+          pixels.setColor(n*4, ofColor(0,0,0));
+      }
   }
 
   tex.loadData(pixels);
-  tex.draw(0,0);
+  tex.draw(0,0, ofGetWidth(), ofGetHeight());
 
 }
 
@@ -240,7 +247,8 @@ void ofApp::keyPressed(int key){
         std::string tss = std::string(12 - ss.str().length(), '0') + ss.str();
         //cout << ss.str() << ", " << tss << endl;
 
-        img.grabScreen(0, 0 , ofGetWidth(), ofGetHeight());
+        //img.grabScreen(0, 0 , width, height);
+        img.setFromPixels(pixels);
         img.save("img-" + tss + ".png");
 
     }
