@@ -34,23 +34,30 @@ void ofApp::init() {
   for (int i=0; i<nt; i++){
 
     vector<double> t;
-    float theta = ofRandom(-TWO_PI, TWO_PI);
+    //float theta = ofRandom(-TWO_PI, TWO_PI);
 
-    for (int j=0; j<size-2; ++j) {
-        double r1 = ofRandom(min/1., max/1.);
-        t.push_back(r1);
-    }
+//    for (int j=0; j<size-2; ++j) {
+//        double r1 = ofRandom(min/1., max/1.);
+//        t.push_back(r1);
+//    }
 
-    for (int j=size-2; j<size; ++j) {
-        double r2 = ofRandom(min/2.0, max/2.0);
-        t.push_back(r2);
-    }
+//    for (int j=size-2; j<size; ++j) {
+//        double r2 = ofRandom(min/2.0, max/2.0);
+//        t.push_back(r2);
+//    }
+
+    t.push_back(ofRandom(min/10., max/10.));
+    t.push_back(ofRandom(min/1., max/1.));
+    t.push_back(ofRandom(min/1., max/1.));
+    t.push_back(ofRandom(min/2.5, max/2.5));
+    t.push_back(ofRandom(min/1., max/1.));
+    t.push_back(ofRandom(min/1., max/1.));
 
     // t[0] = 0.0;
-    //t[2] = -1.0*t[1];
+    t[2] = -1.0*t[1];
 
     //t[0] = t[3];
-    t[1] = -1.0*t[3];
+    //t[1] = -1.0*t[3];
 
     //t[4] = t[5];
 
@@ -71,48 +78,48 @@ void ofApp::init() {
 
   }
 
-/*{
-  // SIERPINSKI
-  transforms.clear();
-  vector<float> t;
+/*    {
+          // SIERPINSKI
+          transforms.clear();
+          vector<double> t;
 
-  t.push_back(0.5);
-  t.push_back(0.0);
+          t.push_back(0.5);
+          t.push_back(0.0);
 
-  t.push_back(0.0);
-  t.push_back(0.5);
+          t.push_back(0.0);
+          t.push_back(0.5);
 
-  t.push_back(0.0);
-  t.push_back(0.0);
+          t.push_back(0.0);
+          t.push_back(0.0);
 
-  transforms.push_back(t);
+          transforms.push_back(t);
 
-  t.clear();
+          t.clear();
 
-  t.push_back(0.5);
-  t.push_back(0.0);
+          t.push_back(0.5);
+          t.push_back(0.0);
 
-  t.push_back(0.0);
-  t.push_back(0.5);
+          t.push_back(0.0);
+          t.push_back(0.5);
 
-  t.push_back(0.25);
-  t.push_back(0.0);
+          t.push_back(0.25);
+          t.push_back(0.0);
 
-  transforms.push_back(t);
+          transforms.push_back(t);
 
-  t.clear();
+          t.clear();
 
-  t.push_back(0.5);
-  t.push_back(0.0);
+          t.push_back(0.5);
+          t.push_back(0.0);
 
-  t.push_back(0.0);
-  t.push_back(0.5);
+          t.push_back(0.0);
+          t.push_back(0.5);
 
-  t.push_back(0.0);
-  t.push_back(0.25);
+          t.push_back(0.0);
+          t.push_back(0.25);
 
-  transforms.push_back(t);
-}*/
+          transforms.push_back(t);
+    }*/
 }
 
 //--------------------------------------------------------------
@@ -147,6 +154,7 @@ int ofApp::chooseTransform(int n){
 void ofApp::update(){
 
   ofPoint xy;
+  ix=0.0; iy=0.0;
 
   for (int i=0; i<np; i++) {
 
@@ -163,11 +171,11 @@ void ofApp::update(){
       xy.y = (ix*tr[2] + iy*tr[3] + tr[5]);
 
 
-      //xy = horseshoe(xy);
-      //xy = sinusoidal(xy);
-      //xy = spherical(xy);
-      xy = bent(xy);
-      //xy = polar(xy);
+//      xy = horseshoe(xy);
+//      xy = sinusoidal(xy);
+      xy = spherical(xy);
+//      xy = bent(xy);
+//      xy = polar(xy);
 
       // store points, if inside view
       X = (int)ofMap(xy.x, min, max, 20, width-21, false);   // clamp
