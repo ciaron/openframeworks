@@ -16,10 +16,10 @@ class ofApp : public ofBaseApp{
 
     int count;
     const int nt = 6; // num transforms
-    int np = 200000; // num points
+    int np = 250000; // num points
 
-    int width = 1000;
-    int height = 1000;
+    int width = 1200;
+    int height = 1200;
     int wh = width * height;
 
     vector<vector<double>> transforms;

@@ -1,5 +1,6 @@
 #include "ofMain.h"
 #include "ofApp.h"
+#include "variations.h"
 
 // IFS1 : basic IFS
 

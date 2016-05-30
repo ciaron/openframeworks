@@ -1,4 +1,5 @@
 #include "ofApp.h"
+#include "variations.h"
 
 std::string uint64_to_string( uint64_t value ) {
     std::ostringstream os;
@@ -35,33 +36,21 @@ void ofApp::init() {
     vector<double> t;
     float theta = ofRandom(-TWO_PI, TWO_PI);
 
-//    t.push_back(cos(theta));
-//    t.push_back(sin(theta));
-//    t.push_back(-sin(theta));
-//    t.push_back(cos(theta));
-
     for (int j=0; j<size-2; ++j) {
         double r1 = ofRandom(min/1., max/1.);
-        //if (ofRandom(1.0) < 0.5) r1 = -r1;
         t.push_back(r1);
     }
 
     for (int j=size-2; j<size; ++j) {
-        double r2 = ofRandom(min/1.0, max/1.0);
-
-        //float r2 = ofRandom(0.1, max/2.12);
-        //if (ofRandom(1.0) < 0.25) r2 = -r2;
-
+        double r2 = ofRandom(min/2.0, max/2.0);
         t.push_back(r2);
     }
-
-//cout << theta << "," << t[0] << "," << t[1] << "," << t[2] << "," << t[3] << "," << endl;
 
     // t[0] = 0.0;
     //t[2] = -1.0*t[1];
 
     //t[0] = t[3];
-    //t[1] = -1.0*t[3];
+    t[1] = -1.0*t[3];
 
     //t[4] = t[5];
 
@@ -157,6 +146,8 @@ int ofApp::chooseTransform(int n){
 //--------------------------------------------------------------
 void ofApp::update(){
 
+  ofPoint xy;
+
   for (int i=0; i<np; i++) {
 
       //int tn = (int)ofRandom(0,nt);
@@ -164,43 +155,30 @@ void ofApp::update(){
 
       vector<double> tr = transforms[tn];
 
-      double  (*fp1)(double);
-      double  (*fp2)(double);
+      // for to do function pointers
+      //double  (*fp1)(double);
+      //double  (*fp2)(double);
 
-      x = (ix*tr[0] + iy*tr[1] + tr[4]);
-      y = (ix*tr[2] + iy*tr[3] + tr[5]);
+      xy.x = (ix*tr[0] + iy*tr[1] + tr[4]);
+      xy.y = (ix*tr[2] + iy*tr[3] + tr[5]);
 
-      // SINUSOIDAL
-      fp1 = sin;
-      fp2 = sin;
-      x = fp1(x);
-      y = fp2(y);
 
-      // SPHERICAL
-      //double r2 = (x*x + y*y);
-      //x = x/r2;
-      //y = y/r2;
-
-      // HORSESHOE
-      //double r = sqrt(x*x + y*y);
-      //x = ((x-y)*(x+y)) / r;
-      //y = (2*x*y)/r;
-
-      // SWIRL
-      //double r2 = (x*x + y*y);
-      //x = x*(sin(r2)) - y*cos(r2);
-      //y = x*(cos(r2)) + y*sin(r2);
+      //xy = horseshoe(xy);
+      //xy = sinusoidal(xy);
+      //xy = spherical(xy);
+      xy = bent(xy);
+      //xy = polar(xy);
 
       // store points, if inside view
-      X = (int)ofMap(x, min, max, 20, width-21, false);   // clamp
-      Y = (int)ofMap(y, min, max, 20, height-21, false);  // clamp
+      X = (int)ofMap(xy.x, min, max, 20, width-21, false);   // clamp
+      Y = (int)ofMap(xy.y, min, max, 20, height-21, false);  // clamp
 
       if (X>20 && X<width-20 && Y>20 && Y<height-20) {
         points[Y*width+X] += 1;
       }
 
-      ix=x;
-      iy=y;
+      ix=xy.x;
+      iy=xy.y;
   }
 
 }
