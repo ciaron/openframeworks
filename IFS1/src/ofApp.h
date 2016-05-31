@@ -1,6 +1,8 @@
 #pragma once
 
 #include "ofMain.h"
+#include "ofxGui.h"
+#include "transform.h"
 
 //#include <complex.h>
 //complex<double> a, b, c, d;
@@ -8,6 +10,11 @@
 //vector<complex<double>[]> transforms;
 
 class ofApp : public ofBaseApp{
+
+    ofParameter<int> numPoints;
+    ofxButton clearButton;
+    ofxPanel gui;
+    bool bHide;
 
     double x, y, ix, iy;
     int X, Y;
@@ -22,7 +29,8 @@ class ofApp : public ofBaseApp{
     int height = 1200;
     int wh = width * height;
 
-    vector<vector<double>> transforms;
+//    vector<vector<double>> transforms;
+    vector<Transform> transforms;
     vector<int> points;  // 'hit count' for pixels
 
     ofPixels pixels;
@@ -32,6 +40,7 @@ class ofApp : public ofBaseApp{
     // for screenshots
     ofImage img;
 
+    // Probability of each transform being selected
     //float probs[12] = {1.0/12, 2.0/12, 3.0/12, 4.0/12, 5.0/12, 6.0/12, 7.0/12, 8.0/12, 9.0/12, 10.0/12, 11.0/12, 12.0/12};
     //float probs[6] = {1.0/6, 2.0/6, 3.0/6, 4.0/6, 5.0/6, 6.0/6};
     //float probs[5] = {0.2, 0.4, 0.6, 0.8, 1.0};
@@ -47,6 +56,8 @@ class ofApp : public ofBaseApp{
 		void setup();
 		void update();
 		void draw();
+        void exit();
+
 
 		void keyPressed(int key);
 		void keyReleased(int key);
@@ -61,5 +72,7 @@ class ofApp : public ofBaseApp{
 		void gotMessage(ofMessage msg);
         string uint64_to_string( uint64_t value );
         int chooseTransform(int n);
+        void clearButtonPressed();
+
 		
 };

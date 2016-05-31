@@ -12,9 +12,13 @@ Project{
         name: { return FileInfo.baseName(path) }
 
         files: [
-            'src/main.cpp',
-            'src/ofApp.cpp',
-            'src/ofApp.h',
+            "src/transform.cpp",
+            "src/transform.h",
+            "src/variations.cpp",
+            "src/variations.h",
+            "src/main.cpp",
+            "src/ofApp.cpp",
+            "src/ofApp.h",
         ]
 
         // This project is using addons.make to include the addons
@@ -22,10 +26,10 @@ Project{
         // the addons from the qbs file change the following lines to
         // the list of used addons in array format. eg:
         //
-        // of.addons: [
-        //     'ofxGui',
+        of.addons: [
+            'ofxGui'
         //     'ofxOpenCv',
-        // ]
+        ]
 
         // additional flags for the project. the of module sets some
         // flags by default to add the core libraries, search paths...

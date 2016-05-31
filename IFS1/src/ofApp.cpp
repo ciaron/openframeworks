@@ -1,5 +1,6 @@
 #include "ofApp.h"
 #include "variations.h"
+#include "transform.h"
 
 std::string uint64_to_string( uint64_t value ) {
     std::ostringstream os;
@@ -33,32 +34,39 @@ void ofApp::init() {
   // create/initialise transforms.
   for (int i=0; i<nt; i++){
 
-    vector<double> t;
-    //float theta = ofRandom(-TWO_PI, TWO_PI);
+    vector<Transform> ts;
+    Transform t(min,max);
 
-//    for (int j=0; j<size-2; ++j) {
-//        double r1 = ofRandom(min/1., max/1.);
-//        t.push_back(r1);
-//    }
+    t.setup(
+//            ofRandom(min, max),
+//            ofRandom(min, max),
+//            ofRandom(min, max),
+//            ofRandom(min, max),
+//            ofRandom(min, max),
+//            ofRandom(min, max)
 
-//    for (int j=size-2; j<size; ++j) {
-//        double r2 = ofRandom(min/2.0, max/2.0);
-//        t.push_back(r2);
-//    }
+             ofRandom(min/10., max/10.),
+             ofRandom(min/0.9, max/0.9),
+             ofRandom(min/0.9, max/0.9),
+             ofRandom(min/2.5, max/2.5),
+             ofRandom(min/1.2, max/1.2),
+             ofRandom(min/1.2, max/1.2)
 
-    t.push_back(ofRandom(min/10., max/10.));
-    t.push_back(ofRandom(min/0.9, max/0.9));
-    t.push_back(ofRandom(min/0.9, max/0.9));
-    t.push_back(ofRandom(min/2.5, max/2.5));
-    t.push_back(ofRandom(min/1.2, max/1.2));
-    t.push_back(ofRandom(min/1.2, max/1.2));
+         );
+
+//    t.a = ofRandom(min/10., max/10.);
+//    t.b = ofRandom(min/0.9, max/0.9);
+//    t.c = ofRandom(min/0.9, max/0.9);
+//    t.d = ofRandom(min/2.5, max/2.5);
+//    t.e = ofRandom(min/1.2, max/1.2);
+//    t.f = ofRandom(min/1.2, max/1.2);
 
     // t[0] = 0.0;
-    t[2] = -1.0*t[1];
+//    params[2] = -1.0*params[1];
+//    t.set(params);
 
     //t[0] = t[3];
     //t[1] = -1.0*t[3];
-
     //t[4] = t[5];
 
     /*
@@ -73,10 +81,24 @@ void ofApp::init() {
     t.push_back(ofRandom(-0.5, 0.5));
 */
 
-    // cout << t[0] << ", " << t[1] << ", " << t[2] << ", " << t[3] << ", " << t[4] << ", " << t[5] << ", " << endl;
     transforms.push_back(t);
 
   }
+
+  // GUI SETUP
+  clearButton.addListener(this, &ofApp::clearButtonPressed);
+  gui.setup();
+  gui.loadFont("miso-regular.ttf",18,true,false,72);
+
+  unsigned i = 0;
+  for (Transform t: transforms) {
+    t.transformParams.setName("transform " + to_string(i));
+    gui.add(t.transformParams);
+    ++i;
+  }
+
+  gui.add(numPoints.set("num points", np, 1000, 2000000));
+  gui.add(clearButton.setup("clear"));
 
 /*    {
           // SIERPINSKI
@@ -124,6 +146,8 @@ void ofApp::init() {
 
 //--------------------------------------------------------------
 void ofApp::setup(){
+
+    bHide = false;
     ofBackground(0);
 
     init();
@@ -156,20 +180,22 @@ void ofApp::update(){
   ofPoint xy;
   ix=0.0; iy=0.0;
 
+  np = numPoints; // from GUI
+
   for (int i=0; i<np; i++) {
 
       //int tn = (int)ofRandom(0,nt);
       int tn = chooseTransform(nt);
 
-      vector<double> tr = transforms[tn];
+      Transform tr = transforms[tn];
+      //vector<double> params = tr.get();
 
       // for to do function pointers
       //double  (*fp1)(double);
       //double  (*fp2)(double);
 
-      xy.x = (ix*tr[0] + iy*tr[1] + tr[4]);
-      xy.y = (ix*tr[2] + iy*tr[3] + tr[5]);
-
+      xy.x = (ix*tr.a + iy*tr.b + tr.e);
+      xy.y = (ix*tr.c + iy*tr.d + tr.f);
 
 //      xy = horseshoe(xy);
 //      xy = sinusoidal(xy);
@@ -211,10 +237,24 @@ void ofApp::draw(){
   tex.loadData(pixels);
   tex.draw(0,0, ofGetWidth(), ofGetHeight());
 
+  // auto draw?
+  // should the gui control hiding?
+  if(!bHide){
+      gui.draw();
+  }
+
 }
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
+    if(key == 'h'){
+        bHide = !bHide;
+    }
+
+    if(key == 'c'){
+        clearButtonPressed();
+    }
+
     if(key == 's'){
 
         // via: https://forum.openframeworks.cc/t/solved-saving-as-pdf-or-png-off-screen-drawing/9724/2
@@ -293,3 +333,11 @@ void ofApp::dragEvent(ofDragInfo dragInfo){
 
 }
 
+void ofApp::clearButtonPressed(){
+    ofBackground(0);
+    std::fill(points.begin(), points.end(), 0);
+}
+
+void ofApp::exit(){
+    clearButton.removeListener(this, &ofApp::clearButtonPressed);
+}
