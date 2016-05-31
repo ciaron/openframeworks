@@ -47,11 +47,11 @@ void ofApp::init() {
 //    }
 
     t.push_back(ofRandom(min/10., max/10.));
-    t.push_back(ofRandom(min/1., max/1.));
-    t.push_back(ofRandom(min/1., max/1.));
+    t.push_back(ofRandom(min/0.9, max/0.9));
+    t.push_back(ofRandom(min/0.9, max/0.9));
     t.push_back(ofRandom(min/2.5, max/2.5));
-    t.push_back(ofRandom(min/1., max/1.));
-    t.push_back(ofRandom(min/1., max/1.));
+    t.push_back(ofRandom(min/1.2, max/1.2));
+    t.push_back(ofRandom(min/1.2, max/1.2));
 
     // t[0] = 0.0;
     t[2] = -1.0*t[1];
@@ -173,7 +173,7 @@ void ofApp::update(){
 
 //      xy = horseshoe(xy);
 //      xy = sinusoidal(xy);
-      xy = spherical(xy);
+//      xy = spherical(xy);
 //      xy = bent(xy);
 //      xy = polar(xy);
 
