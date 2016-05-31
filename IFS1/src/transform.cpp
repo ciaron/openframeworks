@@ -12,5 +12,8 @@ void Transform::setup(double _a, double _b, double _c, double _d, double _e, dou
     transformParams.add(d.set("d", _d, -2.0, 2.0));
     transformParams.add(e.set("e", _e, -2.0, 2.0));
     transformParams.add(f.set("f", _f, -2.0, 2.0));
+
+    //a.addListener();??
+
 }
 

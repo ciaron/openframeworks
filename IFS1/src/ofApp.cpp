@@ -88,11 +88,15 @@ void ofApp::init() {
   // GUI SETUP
   clearButton.addListener(this, &ofApp::clearButtonPressed);
   gui.setup();
+
+
   gui.loadFont("miso-regular.ttf",18,true,false,72);
 
   unsigned i = 0;
   for (Transform t: transforms) {
     t.transformParams.setName("transform " + to_string(i));
+    //t.transformParams.a.addListener(this,&ofApp::paramChanged);
+
     gui.add(t.transformParams);
     ++i;
   }
