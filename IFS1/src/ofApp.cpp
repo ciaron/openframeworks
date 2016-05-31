@@ -202,8 +202,8 @@ void ofApp::update(){
       xy.y = (ix*tr.c + iy*tr.d + tr.f);
 
 //      xy = horseshoe(xy);
-//      xy = sinusoidal(xy);
-//      xy = spherical(xy);
+          xy = sinusoidal(xy);
+      xy = spherical(xy);
 //      xy = bent(xy);
 //      xy = polar(xy);
 

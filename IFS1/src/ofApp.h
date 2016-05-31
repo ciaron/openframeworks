@@ -45,8 +45,8 @@ class ofApp : public ofBaseApp{
     //float probs[6] = {1.0/6, 2.0/6, 3.0/6, 4.0/6, 5.0/6, 6.0/6};
     //float probs[5] = {0.2, 0.4, 0.6, 0.8, 1.0};
     //float probs[4] = {0.25, 0.5, 0.75, 1.0};
-    //float probs[3] = {0.005, 0.01, 1.0};
-    float probs[3] = {0.333, 0.666, 1.0};
+    float probs[3] = {0.005, 0.01, 1.0};
+    //float probs[3] = {0.333, 0.666, 1.0};
     //float probs[2] = {0.5, 1.0};
     //float probs[1] = {1.0};
 
