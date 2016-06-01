@@ -2,23 +2,28 @@
 
 //--------------------------------------------------------------
 void ofApp::setup(){
-//    mesh.setMode(OF_PRIMITIVE_POINTS);
+    mesh.setMode(OF_PRIMITIVE_POINTS);
+    mesh.enableColors();
 
-    mesh.setMode(OF_PRIMITIVE_LINE_LOOP);
+    image.load("stars.png");
+    image.resize(200,200);
 
-    ofVec3f top(100.0, 50.0, 0.0);
-    ofVec3f left(50.0, 150.0, 0.0);
-    ofVec3f right(150.0, 150.0, 0.0);
-
-
-    mesh.addVertex(top);
-    mesh.addColor(ofFloatColor(1.0, 0.0, 0.0)); // Red
-
-    mesh.addVertex(left);
-    mesh.addColor(ofFloatColor(0.0, 1.0, 0.0)); // Green
-
-    mesh.addVertex(right);
-    mesh.addColor(ofFloatColor(1.0, 1.0, 0.0)); // Blue
+    float intensityThreshold = 150.0;
+    int w = image.getWidth();
+    int h = image.getHeight();
+    for (int x=0; x<w; ++x) {
+        for (int y=0; y<h; ++y) {
+            ofColor c = image.getColor(x, y);
+            float intensity = c.getLightness();
+            if (intensity >= intensityThreshold) {
+                ofVec3f pos(x*4, y*4, 0.0);
+                mesh.addVertex(pos);
+                // When addColor(...), the mesh will automatically convert
+                // the ofColor to an ofFloatColor
+                mesh.addColor(c);
+            }
+        }
+    }
 }
 
 //--------------------------------------------------------------
@@ -28,8 +33,11 @@ void ofApp::update(){
 
 //--------------------------------------------------------------
 void ofApp::draw(){
-    ofBackground(0);
+    ofColor centerColor = ofColor(85, 78, 68);
+    ofColor edgeColor(0, 0, 0);
+    ofBackgroundGradient(centerColor, edgeColor, OF_GRADIENT_CIRCULAR);
     mesh.draw();
+//    image.draw(0,0);
 }
 
 //--------------------------------------------------------------
