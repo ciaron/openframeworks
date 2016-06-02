@@ -23,5 +23,17 @@ class ofApp : public ofBaseApp{
 		
         ofMesh mesh;
         ofImage image;
+        ofEasyCam easyCam;
+        vector<ofVec3f> offsets;
+
+        ofMesh meshCopy;
+        bool orbiting;
+        float startOrbitTime;
+
+        vector<float> distances;
+        vector<float> angles;
+        ofVec3f meshCentroid;
+
+        bool mouseDisplacement;
 
 };
