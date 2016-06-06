@@ -12,6 +12,8 @@ Project{
         name: { return FileInfo.baseName(path) }
 
         files: [
+            "bin/data/shader.frag",
+            "bin/data/shader.vert",
             'src/main.cpp',
             'src/ofApp.cpp',
             'src/ofApp.h',

@@ -21,5 +21,9 @@ public:
     void dragEvent(ofDragInfo dragInfo);
     void gotMessage(ofMessage msg);
 
+    ofShader shader;
+    float time0 = 0;
+    float phase = 0;
+    float distortAmount = 0;
 };
 
