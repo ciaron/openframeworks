@@ -47,7 +47,8 @@ void ofApp::setup(){
 
     for (int i=0; i<nTri; i++) {
         //Take a random color from black to red
-        colors[i] = ofColor( ofRandom( 0, 255 ), 0, 0 );
+        //colors[i] = ofColor( ofRandom( 0, 255 ), 0, 0 );
+        colors[i] = ofColor( ofRandom( 0, 255 ) );
     }
 
     //Load shader
@@ -73,7 +74,8 @@ void ofApp::draw(){
 
     //Set a gradient background from white to gray
     //for adding an illusion of visual depth to the scene
-    ofBackgroundGradient( ofColor( 255 ), ofColor( 128 ) );
+    //ofBackgroundGradient( ofColor( 255 ), ofColor( 128 ) );
+    ofBackgroundGradient( ofColor( 128 ), ofColor( 0 ) );
 
     ofPushMatrix(); //Store the coordinate system
 
