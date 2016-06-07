@@ -21,4 +21,9 @@ public:
     void dragEvent(ofDragInfo dragInfo);
     void gotMessage(ofMessage msg);
 
+    ofShader shader;
+    ofLight light;
+    ofEasyCam cam;
+    ofMaterial sphereMaterial;
+
 };

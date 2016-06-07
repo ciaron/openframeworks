@@ -2,6 +2,14 @@
 
 //--------------------------------------------------------------
 void ofApp::setup(){
+    light.setup();
+    light.setPosition(-100, 200,0);
+    ofEnableDepthTest();
+
+    sphereMaterial.setDiffuseColor(ofFloatColor::red);
+    sphereMaterial.setShininess(0.02);
+
+    shader.load("shader");
 
 }
 
@@ -12,7 +20,21 @@ void ofApp::update(){
 
 //--------------------------------------------------------------
 void ofApp::draw(){
+    //ofLight();
+    ofSetColor(1.0, 0.5, 0.0);
 
+    //Enable the shader
+    shader.begin();
+cam.begin();
+ sphereMaterial.begin();
+    ofPushMatrix();
+    //ofTranslate(ofGetWidth()/2, ofGetHeight()/2);
+    ofDrawSphere(100.0);
+    ofPopMatrix();
+ sphereMaterial.end();
+cam.end();
+
+    shader.end();   //Disable the shader
 }
 
 //--------------------------------------------------------------
