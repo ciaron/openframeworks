@@ -15,7 +15,7 @@ void testApp::setup(){
 	shader.setGeometryOutputCount( 128 );	//Maximal possible number of output vertices
 
 	//Load shader
-	shader.load( "shaderVert.c", "shaderFrag.c", "shaderGeom.c" );
+    shader.load( "shader.vert", "shader.frag", "shader.geom" );
 
 	//printf("Maximum number of output vertices support is: %i\n", shader.getGeometryMaxOutputCount());
 

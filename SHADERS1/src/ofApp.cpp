@@ -52,7 +52,6 @@ void ofApp::setup(){
     }
 
     //Load shader
-
     shader.load("shader");
 }
 
