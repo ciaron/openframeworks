@@ -28,5 +28,9 @@ class ofApp : public ofBaseApp{
 
         ofMesh mesh;
         vector<ofPoint> vertices0;
+
+        float time0 = 0;
+        float phase = 0;
+        float distortAmount = 0;
 		
 };
