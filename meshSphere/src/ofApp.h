@@ -25,5 +25,8 @@ class ofApp : public ofBaseApp{
         ofIcoSpherePrimitive sphere;
         ofLight pointLight;
         ofMaterial material;
+
+        ofMesh mesh;
+        vector<ofPoint> vertices0;
 		
 };
