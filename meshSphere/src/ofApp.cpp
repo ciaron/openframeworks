@@ -26,47 +26,49 @@ void ofApp::update(){
 
     pointLight.setPosition((ofGetWidth()*.5)+ cos(ofGetElapsedTimef()*.5)*(ofGetWidth()*.3), ofGetHeight()/2, 500);
 
-//    // see openFrameworks Essentials
-//    float deformFreq=0.01 * mouseX;
-//    vector<ofPoint> &vertices = sphere.getMesh().getVertices();
-//    for (int i=0; i<vertices.size(); i++) {
-//        ofPoint v = vertices0[i];
-//        v.normalize();
-//        float sx = sin( v.x * deformFreq );
-//        float sy = sin( v.y * deformFreq );
-//        float sz = sin( v.z * deformFreq );
-//        v.x += sy * sz * 1;
-//        v.y += sx * sz * 1;
-//        v.z += sx * sy * 1;
-//        //if (i==20)
-//        //  v *= mouseX;
-//        //else
-//        //v *= mouseX*ofRandom(0.05, 0.1);
-//        v *= 200;
-//        vertices[i] = v;
-//    }
+    // see openFrameworks Essentials
+    //float deformFreq=0.01 * mouseX;
+    float deformFreq=0.001*ofGetElapsedTimeMillis();
 
-    // see SHADERS1/shader.vert
     vector<ofPoint> &vertices = sphere.getMesh().getVertices();
-    float distortAmount = ofMap(mouseX,0, ofGetWidth(), 0, 1);
-
-    float time = ofGetElapsedTimef();
-    float dt = ofClamp( time - time0, 0, 0.1 );
-    time0 = time;
-    float speed = ofMap( mouseY, 0, ofGetHeight(), 0, 5 );
-
-    phase += speed * dt;
     for (int i=0; i<vertices.size(); i++) {
-      ofPoint v = vertices0[i];
-      v.normalize();
-
-      float distort = distortAmount * sin( phase + 0.015 * v.x);
-      v.x /= 1.0 + distort;
-      v.y /= 1.0 + distort;
-      v.z /= 1.0 + distort;
-      v *= 200;
-      vertices[i] = v;
+        ofPoint v = vertices0[i];
+        v.normalize();
+        float sx = sin( v.x * deformFreq );
+        float sy = sin( v.y * deformFreq );
+        float sz = sin( v.z * deformFreq );
+        v.x += sy * sz * 1;
+        v.y += sx * sz * 1;
+        v.z += sx * sy * 1;
+        //if (i==20)
+        //  v *= mouseX;
+        //else
+        //v *= mouseX*ofRandom(0.05, 0.1);
+        v *= 200;
+        vertices[i] = v;
     }
+
+//    // see SHADERS1/shader.vert
+//    vector<ofPoint> &vertices = sphere.getMesh().getVertices();
+//    float distortAmount = ofMap(mouseX,0, ofGetWidth(), 0, 1);
+
+//    float time = ofGetElapsedTimef();
+//    float dt = ofClamp( time - time0, 0, 0.1 );
+//    time0 = time;
+//    float speed = ofMap( mouseY, 0, ofGetHeight(), 0, 5 );
+
+//    phase += speed * dt;
+//    for (int i=0; i<vertices.size(); i++) {
+//      ofPoint v = vertices0[i];
+//      v.normalize();
+
+//      float distort = distortAmount * sin( phase + 0.015 * v.x);
+//      v.x /= 1.0 + distort;
+//      v.y /= 1.0 + distort;
+//      v.z /= 1.0 + distort;
+//      v *= 200;
+//      vertices[i] = v;
+//    }
 }
 
 //--------------------------------------------------------------
