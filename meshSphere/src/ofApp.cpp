@@ -75,8 +75,8 @@ void ofApp::update(){
 void ofApp::draw(){
 
     ofBackground(ofColor(0));
-    float spinX = sin(ofGetElapsedTimef()*.035f);
-    float spinY = cos(ofGetElapsedTimef()*.075f);
+    float spinX = sin(ofGetElapsedTimef()*.015f);
+    float spinY = cos(ofGetElapsedTimef()*.055f);
 
     ofEnableDepthTest();
 
