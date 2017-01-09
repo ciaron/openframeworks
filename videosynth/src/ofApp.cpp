@@ -7,78 +7,17 @@ void ofApp::setup(){
     ofSetFrameRate( 60 );
     ofBackground( ofColor::white );
     
-    //Chapter 3
-    
-    gui.setup( "Parameters", "settings.xml" );
-
-    gui.add( countX.setup( "countX", 50, 0, 200 ) );
-    gui.add( stepX.setup( "stepX", 20, 0, 200 ) );
-    gui.add( twistX.setup( "twistX", 5, -45, 45 ) );
-    
-    gui.add( countY.setup( "countY", 0, 0, 50) );
-    gui.add( stepY.setup( "stepY", 20, 0, 200 ) );
-    gui.add( twistY.setup( "twistY", 0, -30, 30 ) );
-    gui.add( pinchY.setup( "pinchY", 0, 0, 1 ) );
-    
-    globalGroup.setup( "Global" );
-    globalGroup.add( Scale.setup( "Scale", 1, 0.0, 1 ) );
-    globalGroup.add( Rotate.setup( "Rotate", 0, -180, 180 ) );
-	//globalGroup.add( Background.setup( "Background", 255, 0, 255 ) );		//white background (book's version)
-	globalGroup.add( Background.setup( "Background", 0, 0, 255 ) );			//black background (is convenient for direct starting this example)
-    gui.add( &globalGroup );
-    
-    primGroup.setup( "Primitive" );
-    primGroup.add( shiftY.setup( "shiftY", 0.0, -1000.0, 1000.0 ) );
-    primGroup.add( rotate.setup( "rotate", 0.0, -180.0, 180.0 ) );
-    primGroup.add( size.setup( "size",
-                              ofVec2f(6,6),
-                              ofVec2f(0,0),
-                              ofVec2f(20,20) ) );
-    //color.setDefaultBackgroundColor( ofColor::gray );
-    primGroup.add( color.setup( "color",
-                               ofColor::black,
-                               ofColor(0,0,0,0),
-                               ofColor::white ) );
-    primGroup.add( filled.setup( "filled", false ) );
-    primGroup.add( type.setup( "type", false ) );
-    gui.add( &primGroup );
-
-    
-    //Chapter 4
-    
     ofLoadImage( image, "collage.png" );
     video.loadMovie( "flowing.mp4" );
     video.play();
-    mixerGroup.setup( "Mixer" );
-    mixerGroup.setHeaderBackgroundColor( ofColor::darkRed );
-    mixerGroup.setBorderColor( ofColor::darkRed );
-    
-    mixerGroup.add( imageAlpha.setup( "image", 100,0,255 ) );
-    mixerGroup.add( videoAlpha.setup( "video", 200,0,255 ) );
-    mixerGroup.add( cameraAlpha.setup( "camera", 100,0,255 ) );
-    
-    shader.load( "kaleido" );
-    mixerGroup.add( kenabled.setup( "kenabled", true ) );
-    mixerGroup.add( ksectors.setup( "ksectors", 10, 1, 100 ) );
-    mixerGroup.add( kangle.setup( "kangle", 0, -180, 180 ) );
-    mixerGroup.add( kx.setup( "kx", 0.5, 0, 1 ) );
-    mixerGroup.add( ky.setup( "ky", 0.5, 0, 1 ) );
-    
-    
-    gui.minimizeAll();
-    gui.add( &mixerGroup );
     
     fbo.allocate( ofGetWidth(), ofGetHeight(), GL_RGB );
-    
-    //-----------
-    gui.loadFromFile( "settings.xml" );
-    showGui = true;
+
+    shader.load( "kaleido" );
+
 }
 
-//--------------------------------------------------------------
-void ofApp::exit() {
-    gui.saveToFile( "settings.xml" );
-}
+
 
 //--------------------------------------------------------------
 void ofApp::update(){
@@ -88,18 +27,18 @@ void ofApp::update(){
 
 //--------------------------------------------------------------
 void ofApp::stripePattern() {
-    ofSetColor( color );
+    ofSetColor( gui->color );
     ofSetLineWidth( 1.0 );
-    if ( filled ) ofFill(); else ofNoFill();
-    for (int i=-countX; i<=countX; i++) {
+    if ( gui->filled ) ofFill(); else ofNoFill();
+    for (int i=-gui->countX; i<=gui->countX; i++) {
         ofPushMatrix();
-        ofTranslate( i * stepX, 0 );
-        ofRotate( i * twistX );
+        ofTranslate( i * gui->stepX, 0 );
+        ofRotate( i * gui->twistX );
         
-        ofTranslate( 0, shiftY );
-        ofRotate( rotate );
-        ofScale( size->x, size->y );
-        if ( type ) ofRect( -50, -50, 100, 100 );
+        ofTranslate( 0, gui->shiftY );
+        ofRotate( gui->rotate );
+        ofScale( gui->size->x, gui->size->y );
+        if ( gui->type ) ofRect( -50, -50, 100, 100 );
         else ofTriangle( 0, 0, -50, 100, 50, 100 );
         
         ofPopMatrix();
@@ -108,15 +47,15 @@ void ofApp::stripePattern() {
 
 //--------------------------------------------------------------
 void ofApp::matrixPattern() {
-    for (int y=-countY; y<=countY; y++) {
+    for (int y=-gui->countY; y<=gui->countY; y++) {
         ofPushMatrix();
         //---------------------
-        if ( countY > 0 ) {
-            float scl = ofMap( y, -countY, countY, 1-pinchY, 1 );
+        if ( gui->countY > 0 ) {
+            float scl = ofMap( y, -gui->countY, gui->countY, 1-gui->pinchY, 1 );
             ofScale( scl, scl );
         }
-        ofTranslate( 0, y * stepY );
-        ofRotate( y * twistY );
+        ofTranslate( 0, y * gui->stepY );
+        ofRotate( y * gui->twistY );
         stripePattern();
         //---------------------
         ofPopMatrix();
@@ -125,18 +64,18 @@ void ofApp::matrixPattern() {
 
 //--------------------------------------------------------------
 void ofApp::draw2d() {
-    ofBackground( Background );
+    ofBackground( gui->Background );
     //ofClear(0);
     
     //Image, video and camera
     ofDisableSmoothing();
     ofEnableBlendMode( OF_BLENDMODE_ADD );
-    ofSetColor( 255, imageAlpha );
+    ofSetColor( 255, gui->imageAlpha );
     image.draw( 0, 0, ofGetWidth(), ofGetHeight() );
-    ofSetColor( 255, videoAlpha );
+    ofSetColor( 255, gui->videoAlpha );
     video.draw( 0, 0, ofGetWidth(), ofGetHeight() );
     if ( camera.isInitialized() ) {
-        ofSetColor( 255, cameraAlpha );
+        ofSetColor( 255, gui->cameraAlpha );
         camera.draw( 0, 0, ofGetWidth(), ofGetHeight() );
     }
     ofEnableAlphaBlending();
@@ -145,9 +84,9 @@ void ofApp::draw2d() {
     //Matrix pattern
     ofPushMatrix();
     ofTranslate( ofGetWidth() / 2, ofGetHeight() / 2 );
-    float Scl = pow( Scale, 4.0f );
+    float Scl = pow( gui->Scale, 4.0f );
     ofScale( Scl, Scl );
-    ofRotate( Rotate );
+    ofRotate( gui->Rotate );
     //----
     matrixPattern();
     //----
@@ -161,37 +100,37 @@ void ofApp::draw(){
     fbo.end();
     ofSetColor( 255 );
     
-    if ( kenabled ) {
+    if ( gui->kenabled ) {
         shader.begin();
-        shader.setUniform1i( "ksectors", ksectors );
-        shader.setUniform1f( "kangleRad", ofDegToRad(kangle) );
-        shader.setUniform2f( "kcenter", kx*ofGetWidth(),
-                            ky*ofGetHeight() );
+        shader.setUniform1i( "ksectors", gui->ksectors );
+        shader.setUniform1f( "kangleRad", ofDegToRad(gui->kangle) );
+        shader.setUniform2f( "kcenter", gui->kx*ofGetWidth(),
+                            gui->ky*ofGetHeight() );
         shader.setUniform2f( "screenCenter", 0.5*ofGetWidth(),
                             0.5*ofGetHeight() );
     }
     fbo.draw( 0, 0, ofGetWidth(), ofGetHeight() );
-    if ( kenabled ) shader.end();
+    if ( gui->kenabled ) shader.end();
     
-    if ( showGui ) gui.draw();
+    //if ( showGui ) gui.draw();
 }
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
-    if ( key == 'z' ) showGui = !showGui;
+    //if ( key == 'z' ) showGui = !showGui;
 //    if ( key == OF_KEY_RETURN ) ofSaveScreen( "screenshot.png" );
     if ( key == OF_KEY_RETURN ) ofSaveScreen( "screenshot" + ofToString( ofRandom(1, 1000), 0) + ".png" );
     
-    if ( key == 's' ) {
-        ofFileDialogResult res;
-        res = ofSystemSaveDialog( "preset.xml", "Saving Preset");
-        if ( res.bSuccess ) gui.saveToFile( res.filePath );
-    }
-    if ( key == 'l' ) {
-        ofFileDialogResult res;
-        res = ofSystemLoadDialog( "Loading Preset" );
-        if ( res.bSuccess ) gui.loadFromFile( res.filePath );
-    }
+//    if ( key == 's' ) {
+//        ofFileDialogResult res;
+//        res = ofSystemSaveDialog( "preset.xml", "Saving Preset");
+//        if ( res.bSuccess ) gui.saveToFile( res.filePath );
+//    }
+//    if ( key == 'l' ) {
+//        ofFileDialogResult res;
+//        res = ofSystemLoadDialog( "Loading Preset" );
+//        if ( res.bSuccess ) gui.loadFromFile( res.filePath );
+//    }
     
     //Chapter 4
     
