@@ -8,8 +8,7 @@ void ofApp::setup(){
     ofBackground( ofColor::white );
     
     //Chapter 3
-    
-    gui.setup( "Parameters", "settings.xml" );
+    gui.setup( "Parameters", "settings.xml" ); // gui : ofxPanel
 
     gui.add( countX.setup( "countX", 50, 0, 200 ) );
     gui.add( stepX.setup( "stepX", 20, 0, 200 ) );
@@ -47,7 +46,7 @@ void ofApp::setup(){
     //Chapter 4
     
     ofLoadImage( image, "collage.png" );
-    video.loadMovie( "flowing.mp4" );
+    video.loadMovie( "nasa.mp4" );
     video.play();
     mixerGroup.setup( "Mixer" );
     mixerGroup.setHeaderBackgroundColor( ofColor::darkRed );
@@ -173,7 +172,11 @@ void ofApp::draw(){
     fbo.draw( 0, 0, ofGetWidth(), ofGetHeight() );
     if ( kenabled ) shader.end();
     
-    if ( showGui ) gui.draw();
+    if ( showGui ) {
+        //ofDisableDepthTest();
+        gui.draw();
+        //ofEnableDepthTest();
+    }
 }
 
 //--------------------------------------------------------------
