@@ -12,9 +12,11 @@ Project{
         name: { return FileInfo.baseName(path) }
 
         files: [
-            'src/main.cpp',
-            'src/ofApp.cpp',
-            'src/ofApp.h',
+            "src/GuiApp.cpp",
+            "src/GuiApp.h",
+            "src/main.cpp",
+            "src/ofApp.cpp",
+            "src/ofApp.h",
         ]
 
         of.addons: [
