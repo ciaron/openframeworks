@@ -8,16 +8,19 @@ void ofApp::setup(){
     ofBackground( ofColor::white );
     
     ofLoadImage( image, "collage.png" );
-    video.loadMovie( "flowing.mp4" );
+    //video.loadMovie( "flowing.mp4" );
+    video.load( "x15.mp4" );
     video.play();
     
     fbo.allocate( ofGetWidth(), ofGetHeight(), GL_RGB );
 
     shader.load( "kaleido" );
 
+    float l = video.getDuration();
+    //cout << "video length: " << l << endl;
+    skip = gui->skipSecs / l;
+
 }
-
-
 
 //--------------------------------------------------------------
 void ofApp::update(){
@@ -80,6 +83,20 @@ void ofApp::draw2d() {
     }
     ofEnableAlphaBlending();
     ofEnableSmoothing();
+
+    video.setVolume(gui->volume);
+
+    if (gui->skipFwd) {
+        float p = video.getPosition();
+        video.setPosition(p+skip);
+        gui->skipFwd = false;
+    }
+
+    if (gui->skipBack) {
+        float p = video.getPosition();
+        video.setPosition(p-skip);
+        gui->skipBack = false;
+    }
     
     //Matrix pattern
     ofPushMatrix();

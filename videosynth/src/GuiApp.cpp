@@ -1,10 +1,3 @@
-/*
- * GuiApp.cpp
- *
- *  Created on: Oct 28, 2014
- *      Author: arturo
- */
-
 #include "GuiApp.h"
 
 void GuiApp::setup(){
@@ -50,19 +43,39 @@ void GuiApp::setup(){
     mixerGroup.add( videoAlpha.setup( "video", 200,0,255 ) );
     mixerGroup.add( cameraAlpha.setup( "camera", 100,0,255 ) );
 
-
     mixerGroup.add( kenabled.setup( "kenabled", true ) );
     mixerGroup.add( ksectors.setup( "ksectors", 10, 1, 100 ) );
     mixerGroup.add( kangle.setup( "kangle", 0, -180, 180 ) );
     mixerGroup.add( kx.setup( "kx", 0.5, 0, 1 ) );
     mixerGroup.add( ky.setup( "ky", 0.5, 0, 1 ) );
 
+    // video volume control
+    mixerGroup.add( volume.setup( "volume", 0.5, 0, 1 ) );
+
+    //video skip fwd/back
+
+    string s1 = string("Skip +") + to_string(skipSecs) + string("s");
+    string s2 = string("Skip -") + to_string(skipSecs) + string("s");
+
+    mixerGroup.add( skipfwd.setup( "Skip +5s" , 50,20) );
+    mixerGroup.add( skipback.setup( "Skip -5s" , 50, 20) );
+
+    skipfwd.addListener(this, &GuiApp::skipFwdPressed);
+    skipback.addListener(this, &GuiApp::skipBackPressed);
 
     gui.minimizeAll();
     gui.add( &mixerGroup );
 
     gui.loadFromFile( "settings.xml" );
 
+}
+
+void GuiApp::skipFwdPressed(){
+    skipFwd=true;
+}
+
+void GuiApp::skipBackPressed(){
+    skipBack=true;
 }
 
 void GuiApp::update(){

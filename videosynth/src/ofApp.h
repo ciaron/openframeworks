@@ -17,6 +17,9 @@ public:
     ofVideoPlayer video;
     ofVideoGrabber camera;
 
+    // percent skip fwd/back
+    float skip;
+
     ofFbo fbo;
     void draw2d();
     

@@ -10,11 +10,6 @@ public:
     void draw();
     void exit();
 
-//    ofParameterGroup parameters;
-//    ofParameter<float> radius;
-//    ofParameter<ofColor> color;
-//    ofxPanel gui;
-
     ofxPanel gui;
     ofxIntSlider countX;
     ofxFloatSlider stepX;
@@ -40,5 +35,18 @@ public:
     ofxToggle kenabled;
     ofxIntSlider ksectors;
     ofxFloatSlider kangle, kx, ky;
+
+    ofxFloatSlider volume;
+
+    ofxButton skipfwd;
+    ofxButton skipback;
+
+    void skipFwdPressed();
+    void skipBackPressed();
+
+    bool skipFwd=false;
+    bool skipBack=false;
+
+    int skipSecs = 5;
 
 };
