@@ -1,7 +1,7 @@
 #pragma once
 
 #include "ofMain.h"
-#include "ofxGui.h"
+#include <ofxDatGui.h>
 
 class GuiApp: public ofBaseApp {
 public:
@@ -10,36 +10,28 @@ public:
     void draw();
     void exit();
 
-    ofxPanel gui;
-    ofxIntSlider countX;
-    ofxFloatSlider stepX;
-    ofxFloatSlider twistX;
+    //ofxPanel gui;
+    ofxDatGui* gui;
 
-    ofxGuiGroup globalGroup;
-    ofxFloatSlider Scale;
-    ofxFloatSlider Rotate;
-    ofxFloatSlider Background;
+//    ofxColorSlider color;
+    ofColor color = (0, 255, 0); // colorPicker?
 
-    ofxGuiGroup primGroup;
-    ofxFloatSlider shiftY, rotate;
-    ofxVec2Slider size;
-    ofxColorSlider color;
-    ofxToggle filled, type;
+//    ofxToggle filled,
+//    ofxToggle type;
+    bool filled = false;
+    bool type = false;
 
-    ofxIntSlider countY;
-    ofxFloatSlider stepY, twistY, pinchY;
+//    ofxIntSlider countY;
+//    ofxFloatSlider stepY, twistY, pinchY;
 
-    ofxGuiGroup mixerGroup;
-    ofxFloatSlider imageAlpha, videoAlpha, cameraAlpha;
 
-    ofxToggle kenabled;
-    ofxIntSlider ksectors;
-    ofxFloatSlider kangle, kx, ky;
+//    ofxToggle kenabled;
 
-    ofxFloatSlider volume;
 
-    ofxButton skipfwd;
-    ofxButton skipback;
+//    ofxFloatSlider volume;
+
+//    ofxButton skipfwd;
+//    ofxButton skipback;
 
     void skipFwdPressed();
     void skipBackPressed();
@@ -49,4 +41,23 @@ public:
 
     int skipSecs = 5;
 
+    int countX, countY;
+    float stepX, stepY;
+    float twistX, twistY;
+    float pinchY;
+
+    float Scale, Rotate, Background, shiftY, rotate;
+
+    int ksectors;
+    float kangle;
+    float kx;
+    float ky;
+
+    int sizeX, sizeY;
+
+    bool kenabled = true;
+
+    float imageAlpha;
+    float cameraAlpha;
+    float videoAlpha;
 };

@@ -40,7 +40,7 @@ void ofApp::stripePattern() {
         
         ofTranslate( 0, gui->shiftY );
         ofRotate( gui->rotate );
-        ofScale( gui->size->x, gui->size->y );
+        ofScale( gui->sizeX, gui->sizeY );
         if ( gui->type ) ofRect( -50, -50, 100, 100 );
         else ofTriangle( 0, 0, -50, 100, 50, 100 );
         
@@ -84,7 +84,7 @@ void ofApp::draw2d() {
     ofEnableAlphaBlending();
     ofEnableSmoothing();
 
-    video.setVolume(gui->volume);
+//    video.setVolume(gui->volume);
 
     if (gui->skipFwd) {
         float p = video.getPosition();
