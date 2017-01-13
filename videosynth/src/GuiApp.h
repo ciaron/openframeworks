@@ -1,7 +1,7 @@
 #pragma once
 
 #include "ofMain.h"
-#include <ofxDatGui.h>
+#include "ofxDatGui.h"
 
 class GuiApp: public ofBaseApp {
 public:
@@ -9,6 +9,8 @@ public:
     void update();
     void draw();
     void exit();
+
+    void onButtonEvent(ofxDatGuiButtonEvent e);
 
     //ofxPanel gui;
     ofxDatGui* gui;
@@ -18,17 +20,8 @@ public:
 
 //    ofxToggle filled,
 //    ofxToggle type;
-    bool filled = false;
-    bool type = false;
-
-//    ofxIntSlider countY;
-//    ofxFloatSlider stepY, twistY, pinchY;
-
 
 //    ofxToggle kenabled;
-
-
-//    ofxFloatSlider volume;
 
 //    ofxButton skipfwd;
 //    ofxButton skipback;
@@ -55,9 +48,14 @@ public:
 
     int sizeX, sizeY;
 
+    bool filled = false;
+    bool type = false;
+
     bool kenabled = true;
 
     float imageAlpha;
     float cameraAlpha;
     float videoAlpha;
+
+    float volume;
 };
