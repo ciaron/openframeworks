@@ -27,8 +27,8 @@ void GuiApp::setup(){
     ofxDatGuiSlider* shiftYsl = gui->addSlider("shiftY", -1000.0, 1000.0, 0);
     ofxDatGuiSlider* rotatesl = gui->addSlider("rotate", -180, 180, 0);
 
-    ofxDatGuiSlider* sizeXsl = gui->addSlider("size(x)", 0, 20, 10);
-    ofxDatGuiSlider* sizeYsl = gui->addSlider("size(y)", 0, 20, 10);
+    ofxDatGuiSlider* sizeXsl = gui->addSlider("size(x)", 0, 2000, 500);
+    ofxDatGuiSlider* sizeYsl = gui->addSlider("size(y)", 0, 2000, 500);
 
     ofxDatGuiSlider* imageAlphasl = gui->addSlider("imageAlpha", 0, 255, 100);
     ofxDatGuiSlider* cameraAlphasl = gui->addSlider("cameraAlpha", 0, 255, 200);
@@ -44,6 +44,9 @@ void GuiApp::setup(){
     ofxDatGuiSlider* volumesl = gui->addSlider("Volume", 0, 1, 0.25);
 
     ofxDatGuiToggle* kenabledTgl = gui->addToggle("kenabled", false);
+
+    ofxDatGuiButton* skipfwdBtn = gui->addButton("skipfwd");
+    ofxDatGuiButton* skipbackBtn = gui->addButton("skipback");
 
 //    gui->getButton("kenabled")->onButtonEvent(this, &GuiApp::onButtonEvent);
 
@@ -77,8 +80,24 @@ void GuiApp::setup(){
 }
 
 void GuiApp::onButtonEvent(ofxDatGuiButtonEvent e) {
-    kenabled = !kenabled;
-    cout << kenabled << endl;
+
+    cout << e.target->getName() << endl;
+    string clicked = e.target->getName();
+
+    if (clicked == "kenabled") {
+        kenabled = !kenabled;
+        cout << kenabled << endl;
+    }
+
+    if (clicked == "skipfwd") {
+        skipFwd = true;
+        cout << "skip fwd" << endl;
+    }
+
+    if (clicked == "skipback") {
+        skipBack = true;
+        cout << "skip back" << endl;
+    }
 }
 
 void GuiApp::skipFwdPressed(){
