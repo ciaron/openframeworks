@@ -40,6 +40,9 @@ void GuiApp::setup(){
     gui->addSlider("imageAlpha", 0, 255, iimageAlpha);
     gui->addSlider("cameraAlpha", 0, 255, icameraAlpha);
     gui->addSlider("videoAlpha", 0, 255, ivideoAlpha);
+    gui->addSlider("shapeAlpha", 0, 255, ishapeAlpha);
+
+    gui->addColorPicker("color", color);
 
     gui->addLabel("SHADER CONTROLS");
 
@@ -62,8 +65,13 @@ void GuiApp::setup(){
 
     gui->onButtonEvent(this, &GuiApp::onButtonEvent);
     gui->onSliderEvent(this, &GuiApp::onSliderEvent);
+    gui->onColorPickerEvent(this, &GuiApp::onColorPickerEvent);
     //gui.setup( "Parameters", "settings.xml" );
 
+}
+
+void GuiApp::onColorPickerEvent(ofxDatGuiColorPickerEvent e) {
+    color = e.color;
 }
 
 void GuiApp::onSliderEvent(ofxDatGuiSliderEvent e)
@@ -87,6 +95,7 @@ void GuiApp::onSliderEvent(ofxDatGuiSliderEvent e)
     if (e.target->is("imageAlpha")) imageAlpha = e.value;
     if (e.target->is("cameraAlpha")) cameraAlpha = e.value;
     if (e.target->is("videoAlpha")) videoAlpha = e.value;
+    if (e.target->is("shapeAlpha")) shapeAlpha = e.value;
     if (e.target->is("ksectors")) ksectors = e.value;
     if (e.target->is("kangle")) kangle = e.value;
     if (e.target->is("kx")) kx = e.value;

@@ -12,6 +12,7 @@ public:
 
     void onButtonEvent(ofxDatGuiButtonEvent e);
     void onSliderEvent(ofxDatGuiSliderEvent e);
+    void onColorPickerEvent(ofxDatGuiColorPickerEvent e);
 
     // Initial variables
     int icountX=12;
@@ -32,6 +33,7 @@ public:
     float iimageAlpha=0.0;
     float icameraAlpha=0.0;
     float ivideoAlpha=255.0;
+    float ishapeAlpha=255.0;
     int iksectors=10;
     float ikangle=0;
     float iVolume=0.01;
@@ -47,7 +49,7 @@ public:
     ofxDatGui* gui;
 
 //    ofxColorSlider color;
-    ofColor color = (0, 255, 0); // colorPicker?
+    ofColor color = ofColor(255, 0, 0); // colorPicker?
 
     bool skipFwd=false;
     bool skipBack=false;
@@ -73,8 +75,8 @@ public:
     float kx=ikx;
     float ky=iky;
 
-    int sizeX=isizeX;
-    int sizeY=isizeY;
+    float sizeX=isizeX;
+    float sizeY=isizeY;
 
     bool filled = ifilled;
     bool type = itype;
@@ -84,6 +86,7 @@ public:
     float imageAlpha=iimageAlpha;
     float cameraAlpha=icameraAlpha;
     float videoAlpha=ivideoAlpha;
+    float shapeAlpha=ishapeAlpha;
 
     float volume=iVolume;
 };

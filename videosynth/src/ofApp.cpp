@@ -31,7 +31,7 @@ void ofApp::update(){
 
 //--------------------------------------------------------------
 void ofApp::stripePattern() {
-    ofSetColor( gui->color );
+    ofSetColor( gui->color, gui->shapeAlpha );
     ofSetLineWidth( 1.0 );
     if ( gui->filled ) ofFill(); else ofNoFill();
     for (int i=-gui->countX; i<=gui->countX; i++) {
