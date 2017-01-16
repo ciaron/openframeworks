@@ -23,7 +23,7 @@ int main( ){
     shared_ptr<ofAppBaseWindow> mainWindow = ofCreateWindow(settings);
 
     settings.width = 300;
-    settings.height = 800;
+    settings.height = 1200;
     settings.setPosition(ofVec2f(0,0));
     settings.resizable = false;
     shared_ptr<ofAppBaseWindow> guiWindow = ofCreateWindow(settings);

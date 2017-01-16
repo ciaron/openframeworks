@@ -11,6 +11,7 @@ void ofApp::setup(){
     //video.loadMovie( "flowing.mp4" );
     video.load( "x15.mp4" );
     video.play();
+    video.setPosition(45.0);
     
     fbo.allocate( ofGetWidth(), ofGetHeight(), GL_RGB );
 
@@ -84,7 +85,7 @@ void ofApp::draw2d() {
     ofEnableAlphaBlending();
     ofEnableSmoothing();
 
-//    video.setVolume(gui->volume);
+    video.setVolume(gui->volume);
 
     if (gui->skipFwd) {
         float p = video.getPosition();
