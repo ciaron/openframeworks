@@ -11,51 +11,82 @@ public:
     void exit();
 
     void onButtonEvent(ofxDatGuiButtonEvent e);
+    void onSliderEvent(ofxDatGuiSliderEvent e);
+    void onColorPickerEvent(ofxDatGuiColorPickerEvent e);
 
-    //ofxPanel gui;
+    // Initial variables
+    int icountX=12;
+    int icountY=2;
+
+    int istepX=20;
+    int istepY=20;
+    float itwistX=5;
+    float itwistY=0;
+    float ipinchY=0;
+    int iBackground=0;
+    float iScale=0.5;
+    float iRotate=0;
+    float ishiftY=0;
+    float irotate=0;
+    float isizeX=20;
+    float isizeY=20;
+    float iimageAlpha=0.0;
+    float icameraAlpha=0.0;
+    float ivideoAlpha=255.0;
+    float ishapeAlpha=255.0;
+    int iksectors=10;
+    float ikangle=0;
+    float iVolume=0.01;
+    float ikx=0.5;
+    float iky=0.5;
+
+    bool ikenabled = true;
+    bool ifilled = false;
+    bool itype = false;
+
+    // END initialisation
+
     ofxDatGui* gui;
 
 //    ofxColorSlider color;
-    ofColor color = (0, 255, 0); // colorPicker?
-
-//    ofxToggle filled,
-//    ofxToggle type;
-
-//    ofxToggle kenabled;
-
-//    ofxButton skipfwd;
-//    ofxButton skipback;
-
-    void skipFwdPressed();
-    void skipBackPressed();
+    ofColor color = ofColor(255, 0, 0); // colorPicker?
 
     bool skipFwd=false;
     bool skipBack=false;
 
     int skipSecs = 5;
 
-    int countX, countY;
-    float stepX, stepY;
-    float twistX, twistY;
-    float pinchY;
+    int countX=icountX;
+    int countY=icountY;
+    int stepX=istepX;
+    int stepY=istepY;
+    float twistX=itwistX;
+    float twistY=itwistY;
+    float pinchY=ipinchY;
 
-    float Scale, Rotate, Background, shiftY, rotate;
+    float Scale=iScale;
+    float Rotate=iRotate;
+    int Background=iBackground;
+    float shiftY=ishiftY;
+    float rotate=irotate;
 
-    int ksectors;
-    float kangle;
-    float kx;
-    float ky;
+    int ksectors=iksectors;
+    float kangle=ikangle;
+    float kx=ikx;
+    float ky=iky;
 
-    int sizeX, sizeY;
+    float sizeX=isizeX;
+    float sizeY=isizeY;
 
-    bool filled = false;
-    bool type = false;
+    bool filled = ifilled;
+    bool type = itype;
 
     bool kenabled = true;
 
-    float imageAlpha;
-    float cameraAlpha;
-    float videoAlpha;
+    float imageAlpha=iimageAlpha;
+    float cameraAlpha=icameraAlpha;
+    float videoAlpha=ivideoAlpha;
+    float shapeAlpha=ishapeAlpha;
 
-    float volume;
+    float volume=iVolume;
 };
