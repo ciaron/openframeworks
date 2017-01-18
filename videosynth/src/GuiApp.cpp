@@ -27,8 +27,8 @@ void GuiApp::setup(){
     ofxDatGuiSlider* shiftYsl = gui->addSlider("shiftY", -1000.0, 1000.0, 0);
     ofxDatGuiSlider* rotatesl = gui->addSlider("rotate", -180, 180, 0);
 
-    ofxDatGuiSlider* sizeXsl = gui->addSlider("size(x)", 0, 2000, 500);
-    ofxDatGuiSlider* sizeYsl = gui->addSlider("size(y)", 0, 2000, 500);
+    ofxDatGuiSlider* sizeXsl = gui->addSlider("size(x)", 0, 20, 0.5);
+    ofxDatGuiSlider* sizeYsl = gui->addSlider("size(y)", 0, 20, 0.5);
 
     ofxDatGuiSlider* imageAlphasl = gui->addSlider("imageAlpha", 0, 255, 100);
     ofxDatGuiSlider* cameraAlphasl = gui->addSlider("cameraAlpha", 0, 255, 200);
