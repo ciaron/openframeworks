@@ -20,8 +20,8 @@ void ofApp::draw(){
 
     shader.begin();
 
-    //shader.setUniform1f("mouseRange", 150); // SET A UNIFORM
-    //shader.setUniform2f("mousePos", mx, my);  // SET A UNIFORM
+    shader.setUniform2f("u_mouse", mouseX, mouseY);  // SET A UNIFORM
+    shader.setUniform1f("u_time", ofGetElapsedTimef() );
     shader.setUniform2f( "u_resolution", ofGetWidth(), ofGetHeight());
     ofRect(0,0,ofGetWidth(), ofGetHeight());
     shader.end();
